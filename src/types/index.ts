@@ -1,0 +1,226 @@
+export interface DashboardStats {
+  totalJobs: number;
+  savedJobs: number;
+  applications: number;
+  savedApps?: number;
+  appliedApps: number;
+  screeningApps?: number;
+  emailsSent: number;
+  interviews: number;
+  offers: number;
+  rejected: number;
+  withdrawn?: number;
+  averageAtsScore: number;
+}
+
+export interface AtsBreakdownData {
+  average_ats: number;
+  total_scored_jobs: number;
+  total_jobs: number;
+  distribution: {
+    "90_100": number;
+    "80_89": number;
+    "70_79": number;
+    "60_69": number;
+    "below_60": number;
+  };
+  scored_jobs: Job[];
+  top_matched_keywords: Array<{ keyword: string; count: number }>;
+  top_missing_keywords: Array<{ keyword: string; count: number }>;
+}
+
+export interface ConversionDetailsData {
+  stats: Record<string, number>;
+  conversion_rates: {
+    interview_rate: number;
+    offer_rate: number;
+    interview_to_offer_rate: number;
+    overall_funnel_rate: number;
+    discovered_to_applied_rate: number;
+  };
+  recent_applications: Application[];
+}
+
+
+export interface Job {
+  id: number;
+  title: string;
+  company: string;
+  location: string;
+  description: string;
+  requirements: string;
+  url: string;
+  job_url?: string;
+  jobUrl?: string;
+  apply_url?: string;
+  applyUrl?: string;
+  source_url?: string;
+  sourceUrl?: string;
+  source: string;
+  salary?: string;
+  job_type?: string;
+  company_type?: string;
+  is_mnc?: boolean;
+  experience?: string;
+  ats_score: number;
+  matched_keywords: string[];
+  missing_keywords: string[];
+  is_saved: number;
+  created_at: string;
+}
+
+export interface Resume {
+  id: number;
+  name: string;
+  email: string;
+  phone: string;
+  skills: string[];
+  experience: string;
+  education: string;
+  linkedin: string;
+  github: string;
+  raw_text?: string;
+  is_active: number;
+  created_at: string;
+}
+
+export interface ResumeScore {
+  content: number;
+  skills: number;
+  experience: number;
+  education: number;
+  completeness: number;
+  suggestions: string[];
+  total: number;
+}
+
+export interface CandidateProfile {
+  id?: number;
+  full_name: string;
+  email: string;
+  phone: string;
+  location: string;
+  target_roles: string;
+  experience: string;
+  education: string;
+  linkedin: string;
+  github: string;
+  skills: string[];
+  theme_pref: string;
+}
+
+export interface Application {
+  id: number;
+  job_id: number;
+  job_title: string;
+  company: string;
+  location: string;
+  ats_score: number;
+  source: string;
+  url: string;
+  status: string;
+  cover_letter: string;
+  notes: string;
+  email: string;
+  email_sent: number;
+  updated_at: string;
+}
+
+export interface AgentLog {
+  id: number;
+  agent_name: string;
+  action: string;
+  status: string;
+  details: string;
+  created_at: string;
+}
+
+export interface CoverLetter {
+  id: number;
+  job_id: number;
+  content: string;
+  created_at: string;
+}
+
+export interface MatchResult {
+  ats_score: number;
+  recommendation: string;
+  matched_keywords: string[];
+  missing_keywords: string[];
+  breakdown?: Record<string, number>;
+  job_title?: string;
+  company?: string;
+  company_type?: string;
+  is_mnc?: boolean;
+}
+
+export interface OllamaStatus {
+  status: string;
+  base_url: string;
+  active_model: string;
+  installed_models: string[];
+}
+
+export interface CoverLetterMatchSummary {
+  score: number;
+  recommendation: string;
+  strong_matches: string[];
+  partial_matches: string[];
+  transferable_skills: string[];
+  missing_skills: string[];
+  selected_projects: Array<{
+    title: string;
+    description: string;
+    tech: string[];
+  }>;
+}
+
+export interface CoverLetterResponseData {
+  content: string;
+  used_ai: boolean;
+  model: string;
+  error?: string;
+  match_summary?: CoverLetterMatchSummary;
+  candidate_info?: {
+    name: string;
+    skills_count: number;
+    resume_analyzed: boolean;
+  };
+  job_info?: {
+    id: number;
+    title: string;
+    company: string;
+    location: string;
+  };
+}
+
+export interface SystemStatus {
+  api: string;
+  database: {
+    status: string;
+    total_jobs: number;
+    total_apps: number;
+  };
+  ollama: OllamaStatus;
+  email: {
+    configured: boolean;
+    sender: string | null;
+  };
+}
+
+export interface ResumeGenerateInput {
+  name: string;
+  email: string;
+  phone: string;
+  location: string;
+  linkedin: string;
+  github: string;
+  summary: string;
+  skills: string[];
+  experience: string;
+  projects: string;
+  education: string;
+  enhance_with_ai: boolean;
+}
+
+
